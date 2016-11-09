@@ -1,0 +1,39 @@
+<resources>
+    <string name="Cancel">Cancel</string>
+    <string name="app_name">Quadcopter Voice Control</string>
+    <string name="yaw">Yaw:</string>
+    <string name="throttle">Throttle:</string>
+    <string name="pitch">Pitch:</string>
+    <string name="roll">Roll:</string>
+    <string name="Connect">Connected</string>
+    <string name="Disconnect">Disconnected</string>
+    <string name="Unarm">Unarm</string>
+    <string name="Arm">Arm</string>
+    <string name="Launch">Launch</string>
+    <string name="Land">Land</string>
+    <string name="Headfree">Headfree</string>
+    <string name="Headstrict">Headstrict</string>
+    <string name="Altihold">Altihold</string>
+    <string name="IMUCali">IMUCali</string>
+
+    <string name="DisconnectToast">Not connected to device</string>
+    <string name="ConnectFailToast">Connection Failed!</string>
+    <string name="ConnectSuccessToast">Connection Successful!</string>
+    <string name="OpenBT">Turn on Bluetooth in ...</string>
+
+    <string name="SelectBTDevice">Select the Bluetooth device</string>
+    <string name="UnpairBT">for unpaired devices</string>
+    <string name="ble_not_supported">BLE not supported</string>
+    <string name="unknown_device">Unknown device</string>
+
+    <string name="menu_scan">Scan</string>
+    <string name="menu_stop">Stop</string>
+
+    <string name="Search">Search</string>
+    <string name="Searching">Searching……</string>
+
+
+    <string name="BLE_list">BLE List</string>
+
+
+</resources>
