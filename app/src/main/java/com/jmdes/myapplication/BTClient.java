@@ -18,9 +18,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.speech.RecognizerIntent;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
@@ -52,7 +55,7 @@ public class BTClient extends Activity {
 	 
 	private TextView throttleText,yawText,pitchText,rollText;
 	private TextView pitchAngText,rollAngText,yawAngText,altText,distanceText,voltageText;
-	private Button connectButton, armButton,lauchLandButton,headFreeButton,altHoldButton;
+	private Button connectButton, armButton,lauchLandButton,headFreeButton,altHoldButton, speechButton;
 
     //Joystick interface implementation class，joystick UI
 	private MySurfaceView stickView;
@@ -205,6 +208,22 @@ public class BTClient extends Activity {
 		lauchLandButton=(Button)findViewById(R.id.lauchLandButton);
 		headFreeButton=(Button)findViewById(R.id.headFreeButton);
 		altHoldButton=(Button)findViewById(R.id.altHoldButton);
+        speechButton = (Button) findViewById(R.id.speech);
+
+    speechButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if(isConnected()){
+                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                        RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                startActivityForResult(intent, 1234);
+            }
+            else{
+                Toast.makeText(getApplicationContext(), "Plese Connect to Internet", Toast.LENGTH_LONG).show();
+            }}
+    });
+
 
 
         // Bind the BLE transceiver service mServiceConnection
@@ -423,5 +442,12 @@ public class BTClient extends Activity {
         intentFilter.addAction(BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED);
         intentFilter.addAction(BluetoothLeService.ACTION_DATA_AVAILABLE);
         return intentFilter;
+    }
+
+    public boolean isConnected()
+    {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo net = cm.getActiveNetworkInfo();
+        return net != null && net.isAvailable() && net.isConnected();
     }
 }

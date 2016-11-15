@@ -68,6 +68,13 @@
                 android:text="@string/Headfree" >
             </Button>
 
+            <Button
+                android:text="Speech"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/speech"
+                android:layout_weight="1" />
+
         </LinearLayout>
 
         <LinearLayout
