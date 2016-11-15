@@ -210,6 +210,7 @@ public class BTClient extends Activity {
 		altHoldButton=(Button)findViewById(R.id.altHoldButton);
         speechButton = (Button) findViewById(R.id.speech);
 
+        //onclicklistener for voice recongnition
     speechButton.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
