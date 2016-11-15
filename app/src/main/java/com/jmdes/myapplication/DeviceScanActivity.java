@@ -47,7 +47,7 @@ public class DeviceScanActivity extends ListActivity {
     private LeDeviceListAdapter mLeDeviceListAdapter;
     private BluetoothAdapter mBluetoothAdapter;
     private boolean mScanning;
-    private int MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 1;
+    private int MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 2;
     private Handler mHandler;
     // Stops scanning after 10 seconds.
     private static final long SCAN_PERIOD = 10000;
@@ -78,7 +78,6 @@ public class DeviceScanActivity extends ListActivity {
             } else {
 
                 // No explanation needed, we can request the permission.
-
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
                             MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION);

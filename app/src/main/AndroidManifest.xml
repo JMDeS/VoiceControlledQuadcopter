@@ -31,7 +31,7 @@
             android:name=".DeviceScanActivity"
             android:label="@string/BLE_list"
             android:theme="@android:style/Theme.Dialog" />
-        <service android:name="com.test.Crazepony.BluetoothLeService" android:enabled="true"/>
+        <service android:name="com.jmdes.myapplication.BluetoothLeService" android:enabled="true"/>
     </application>
 
 </manifest>
