@@ -33,6 +33,8 @@ import android.widget.Toast;
 
 @SuppressLint("NewApi")
 public class BTClient extends Activity {
+    Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+
 
     private final static String TAG = BTClient.class.getSimpleName();
 
@@ -45,6 +47,7 @@ public class BTClient extends Activity {
     private boolean mConnected = false;
 
 	private final static int REQUEST_CONNECT_DEVICE = 1; //The macro defines the device handle
+    private final static int ACTION_RECOGNIZE_SPEECH = 2;
 
 	//BLE to send data to the cycle, is now two types of data, one rocker 4-channel value,
     // and the second is to request IMU data with the new command
@@ -210,21 +213,19 @@ public class BTClient extends Activity {
 		altHoldButton=(Button)findViewById(R.id.altHoldButton);
         speechButton = (Button) findViewById(R.id.speech);
 
-        //onclicklistener for voice recongnition
+      //  onclicklistener for voice recongnition
     speechButton.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             if(isConnected()){
-                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
                 intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                         RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-                startActivityForResult(intent, 1234);
+                startActivityForResult(intent, ACTION_RECOGNIZE_SPEECH);
             }
             else{
                 Toast.makeText(getApplicationContext(), "Plese Connect to Internet", Toast.LENGTH_LONG).show();
             }}
     });
-
 
 
         // Bind the BLE transceiver service mServiceConnection
@@ -406,6 +407,11 @@ public class BTClient extends Activity {
                 }
             }
 			break;
+        case ACTION_RECOGNIZE_SPEECH:
+            // call function to handle commands
+            Toast.makeText(getApplicationContext(), "Command Received", Toast.LENGTH_LONG).show();
+            startActivityForResult(intent, ACTION_RECOGNIZE_SPEECH);
+            break;
 		default:
 			break;
 		}
