@@ -439,6 +439,7 @@ public class BTClient extends Activity {
                 Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("Down")) , Toast.LENGTH_LONG).show();
             } else if (matches_text.contains("Land")) {
                 Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("Land")) , Toast.LENGTH_LONG).show();
+                onlauchLandButtonClicked(findViewById(R.id.lauchLandButton));
             } else if (matches_text.contains("Launch")) {
                 Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("Launch")) , Toast.LENGTH_LONG).show();
                 onlauchLandButtonClicked(findViewById(R.id.lauchLandButton));
