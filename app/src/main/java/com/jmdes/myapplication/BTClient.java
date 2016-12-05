@@ -28,6 +28,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -203,7 +204,7 @@ public class BTClient extends Activity {
 		distanceText= (TextView)findViewById(R.id.distanceText);
 		 
 		// Rocker
-		stickView=(MySurfaceView)findViewById(R.id.stickView);
+//		stickView=(MySurfaceView)findViewById(R.id.stickView);
 
 		// Button
         connectButton=(Button)findViewById(R.id.connectButton);
@@ -211,21 +212,21 @@ public class BTClient extends Activity {
 		lauchLandButton=(Button)findViewById(R.id.lauchLandButton);
 		headFreeButton=(Button)findViewById(R.id.headFreeButton);
 		altHoldButton=(Button)findViewById(R.id.altHoldButton);
-        speechButton = (Button) findViewById(R.id.speech);
+
 
       //  onclicklistener for voice recongnition
-    speechButton.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if(isConnected()){
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                        RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-                startActivityForResult(intent, ACTION_RECOGNIZE_SPEECH);
-            }
-            else{
-                Toast.makeText(getApplicationContext(), "Plese Connect to Internet", Toast.LENGTH_LONG).show();
-            }}
-    });
+//    speechButton.setOnClickListener(new View.OnClickListener() {
+//        @Override
+//        public void onClick(View v) {
+//            if(isConnected()){
+//                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+//                        RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+//                startActivityForResult(intent, ACTION_RECOGNIZE_SPEECH);
+//            }
+//            else{
+//                Toast.makeText(getApplicationContext(), "Plese Connect to Internet", Toast.LENGTH_LONG).show();
+//            }}
+//    });
 
 
         // Bind the BLE transceiver service mServiceConnection
@@ -271,9 +272,21 @@ public class BTClient extends Activity {
     }
 
 
-
+    //sspeechButton = (ImageButton) findViewById(R.id.speech);
+    public void onSpeechButtonClicked(View v)
+    {
+        if(isConnected()){
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                    RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+            startActivityForResult(intent, ACTION_RECOGNIZE_SPEECH);
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "Plese Connect to Internet", Toast.LENGTH_LONG).show();
+        }
+    }
     // Connect the button response function
-    public void onConnectButtonClicked(View v){
+    public void onConnectButtonClicked(View v)
+    {
         if (!mConnected) {
             // Go to the Scan page
             Intent serverIntent = new Intent(this, DeviceScanActivity.class); // Jump program settings
