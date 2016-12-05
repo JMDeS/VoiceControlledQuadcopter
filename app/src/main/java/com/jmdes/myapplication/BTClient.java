@@ -221,22 +221,6 @@ public class BTClient extends Activity {
 		headFreeButton=(Button)findViewById(R.id.headFreeButton);
 		altHoldButton=(Button)findViewById(R.id.altHoldButton);
 
-
-      //  onclicklistener for voice recongnition
-//    speechButton.setOnClickListener(new View.OnClickListener() {
-//        @Override
-//        public void onClick(View v) {
-//            if(isConnected()){
-//                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-//                        RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-//                startActivityForResult(intent, ACTION_RECOGNIZE_SPEECH);
-//            }
-//            else{
-//                Toast.makeText(getApplicationContext(), "Plese Connect to Internet", Toast.LENGTH_LONG).show();
-//            }}
-//    });
-
-
         // Bind the BLE transceiver service mServiceConnection
         Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
         bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
@@ -280,7 +264,7 @@ public class BTClient extends Activity {
     }
 
 
-    //sspeechButton = (ImageButton) findViewById(R.id.speech);
+    //speechButton = (ImageButton) findViewById(R.id.speech);
     public void onSpeechButtonClicked(View v)
     {
         if(isConnected()){
@@ -292,6 +276,7 @@ public class BTClient extends Activity {
             Toast.makeText(getApplicationContext(), "Plese Connect to Internet", Toast.LENGTH_LONG).show();
         }
     }
+
     // Connect the button response function
     public void onConnectButtonClicked(View v)
     {
@@ -337,14 +322,15 @@ public class BTClient extends Activity {
                 btSendBytes(Protocol.getSendData(Protocol.LAUCH, Protocol.getCommandData(Protocol.LAUCH)));
                 lauchLandButton.setText(land);
                 Protocol.throttle=Protocol.LAUCH_THROTTLE;
-                stickView.SmallRockerCircleY=stickView.rc2StickPosY(Protocol.throttle);
-                stickView.touchReadyToSend=true;
+                Protocol.throttle += 100;
+//                stickView.SmallRockerCircleY=stickView.rc2StickPosY(Protocol.throttle);
+//                stickView.touchReadyToSend=true;
             }else{
                 btSendBytes(Protocol.getSendData(Protocol.LAND_DOWN, Protocol.getCommandData(Protocol.LAND_DOWN)));
                 lauchLandButton.setText(launch);
                 Protocol.throttle=Protocol.LAND_THROTTLE;
-                stickView.SmallRockerCircleY=stickView.rc2StickPosY(Protocol.throttle);
-                stickView.touchReadyToSend=true;
+//                stickView.SmallRockerCircleY=stickView.rc2StickPosY(Protocol.throttle);
+//                stickView.touchReadyToSend=true;
             }
         }else {
             Toast.makeText(this, disconnectToast, Toast.LENGTH_SHORT).show();
@@ -427,6 +413,7 @@ public class BTClient extends Activity {
                     Log.d(TAG, "Connect request result=" + result);
                 }
             }
+            super.onActivityResult(requestCode, resultCode, data);
 			break;
         case ACTION_RECOGNIZE_SPEECH:
             // call function to handle commands
@@ -435,26 +422,32 @@ public class BTClient extends Activity {
 
             Log.d("VoiceTest",matches_text.toString());
 
-            if (matches_text.contains("Up")) {
-                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("Up")) , Toast.LENGTH_LONG).show();
-            } else if (matches_text.contains("Down")) {
-                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("Down")) , Toast.LENGTH_LONG).show();
-            } else if (matches_text.contains("Land")) {
-                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("Land")) , Toast.LENGTH_LONG).show();
+            String command = "";
+            if (matches_text.contains("up")) {
+                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("up")) , Toast.LENGTH_LONG).show();
+                command = "Up";
+            } else if (matches_text.contains("down")) {
+                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("down")) , Toast.LENGTH_LONG).show();
+                command = "Down";
+            } else if (matches_text.contains("land")) {
+                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("land")) , Toast.LENGTH_LONG).show();
                 onlauchLandButtonClicked(findViewById(R.id.lauchLandButton));
-            } else if (matches_text.contains("Launch")) {
-                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("Launch")) , Toast.LENGTH_LONG).show();
-                onlauchLandButtonClicked(findViewById(R.id.lauchLandButton));
+                command = "Land";
+            } else if (matches_text.contains("launch")) {
+//                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("Launch")) , Toast.LENGTH_LONG).show();
+                onSendArmButtonClicked(findViewById(R.id.lauchLandButton));
+                command = "Launch";
             } else {
                 Toast.makeText(getApplicationContext(), "No such command!" , Toast.LENGTH_LONG).show();
             }
-            Toast.makeText(getApplicationContext(), "Command Received", Toast.LENGTH_LONG).show();
-            startActivityForResult(intent, ACTION_RECOGNIZE_SPEECH);
+            Toast.makeText(getApplicationContext(), command + " Command Received", Toast.LENGTH_LONG).show();
+//            startActivityForResult(intent, ACTION_RECOGNIZE_SPEECH);
             break;
 		default:
 			break;
+
 		}
-        super.onActivityResult(requestCode, resultCode, data);
+
 	}
 
     // Update the Log-related data, mainly fly control over the IMU data and joystick value data
