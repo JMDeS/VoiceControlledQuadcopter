@@ -69,13 +69,6 @@
                 android:text="@string/Headfree" >
             </Button>
 
-            <Button
-                android:text="Speech"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/speech"
-                android:layout_weight="1" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -166,10 +159,11 @@
 
     </LinearLayout>
 
-    <com.jmdes.myapplication.MySurfaceView
-        android:id="@+id/stickView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <ImageButton
+        android:id="@+id/speech"
+        android:layout_width="112dp"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_mic_black_64dp"/>
 
 
 </LinearLayout>
