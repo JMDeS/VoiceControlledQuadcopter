@@ -433,6 +433,8 @@ public class BTClient extends Activity {
             matches_text = data
                     .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 
+            Log.d("VoiceTest",matches_text.toString());
+
             if (matches_text.contains("Up")) {
                 Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("Up")) , Toast.LENGTH_LONG).show();
             } else if (matches_text.contains("Down")) {
