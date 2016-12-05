@@ -163,7 +163,8 @@
         android:id="@+id/speech"
         android:layout_width="112dp"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_mic_black_64dp"/>
+        app:srcCompat="@drawable/ic_mic_black_64dp"
+        android:onClick="onSpeechButtonClicked"/>
 
 
 </LinearLayout>
