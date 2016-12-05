@@ -11,6 +11,7 @@ package com.jmdes.myapplication;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -31,6 +32,10 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+
+import static com.jmdes.myapplication.R.layout.main;
 
 @SuppressLint("NewApi")
 public class BTClient extends Activity {
@@ -63,6 +68,9 @@ public class BTClient extends Activity {
 
     //Joystick interface implementation class，joystick UI
 	private MySurfaceView stickView;
+
+    Dialog match_text_dialog;
+    ArrayList<String> matches_text;
 
     // Code to manage Service lifecycle.
     // Manage the entire lifecycle of the BLE data service
@@ -189,7 +197,7 @@ public class BTClient extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main); // The setting screen is the main screen main.xml
+		setContentView(main); // The setting screen is the main screen main.xml
 		// display text
 		throttleText = (TextView)findViewById(R.id.throttleText); // 
 		yawText = (TextView)findViewById(R.id.yawText);
@@ -422,12 +430,28 @@ public class BTClient extends Activity {
 			break;
         case ACTION_RECOGNIZE_SPEECH:
             // call function to handle commands
+            matches_text = data
+                    .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+
+            if (matches_text.contains("Up")) {
+                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("Up")) , Toast.LENGTH_LONG).show();
+            } else if (matches_text.contains("Down")) {
+                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("Down")) , Toast.LENGTH_LONG).show();
+            } else if (matches_text.contains("Land")) {
+                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("Land")) , Toast.LENGTH_LONG).show();
+            } else if (matches_text.contains("Launch")) {
+                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("Launch")) , Toast.LENGTH_LONG).show();
+                onlauchLandButtonClicked(findViewById(R.id.lauchLandButton));
+            } else {
+                Toast.makeText(getApplicationContext(), "No such command!" , Toast.LENGTH_LONG).show();
+            }
             Toast.makeText(getApplicationContext(), "Command Received", Toast.LENGTH_LONG).show();
             startActivityForResult(intent, ACTION_RECOGNIZE_SPEECH);
             break;
 		default:
 			break;
 		}
+        super.onActivityResult(requestCode, resultCode, data);
 	}
 
     // Update the Log-related data, mainly fly control over the IMU data and joystick value data
