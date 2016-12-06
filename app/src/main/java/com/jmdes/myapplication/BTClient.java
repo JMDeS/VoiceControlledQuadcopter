@@ -426,12 +426,14 @@ public class BTClient extends Activity {
 
             String command = "";
             if (matches_text.contains("up")) {
-                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("up")) , Toast.LENGTH_LONG).show();
+               // Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("up")) , Toast.LENGTH_LONG).show();
+                Protocol.throttle += 100;
+                btSendBytes(Protocol.getSendData(Protocol.throttle,Protocol.getCommandData(Protocol.throttle)));
+                onaltHoldButtonClicked(findViewById(R.id.altHoldButton));
                 command = "Up";
             } else if (matches_text.contains("down")) {
                // Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("down")) , Toast.LENGTH_LONG).show();
-                Protocol.throttle += 100;
-                btSendBytes(Protocol.getSendData(Protocol.throttle,Protocol.getCommandData(Protocol.throttle)));
+
                 command = "Down";
             } else if (matches_text.contains("land")) {
                 Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("land")) , Toast.LENGTH_LONG).show();
