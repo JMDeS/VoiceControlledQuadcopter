@@ -164,7 +164,7 @@ static boolean upFlag = false;
                 if(upFlag==true){
 //                    btSendBytes(Protocol.getSendData(Protocol.SET_4CON,
 //                            Protocol.getCommandData(Protocol.SET_4CON)));
-                    Protocol.throttle += 100;
+                    Protocol.throttle = 1455;
                     btSendBytes(Protocol.getSendData(Protocol.SET_THROTTLE,
                             Protocol.getCommandData(Protocol.SET_THROTTLE)));
 
@@ -333,6 +333,7 @@ static boolean upFlag = false;
 //                Protocol.throttle += 100;
 //                stickView.SmallRockerCircleY=stickView.rc2StickPosY(Protocol.throttle);
 //                stickView.touchReadyToSend=true;
+                upFlag = true;
             }else{
                 btSendBytes(Protocol.getSendData(Protocol.LAND_DOWN, Protocol.getCommandData(Protocol.LAND_DOWN)));
                 lauchLandButton.setText(launch);
