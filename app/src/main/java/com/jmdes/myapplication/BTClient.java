@@ -164,7 +164,7 @@ static boolean upFlag = false;
                 if(upFlag==true){
 //                    btSendBytes(Protocol.getSendData(Protocol.SET_4CON,
 //                            Protocol.getCommandData(Protocol.SET_4CON)));
-                    Protocol.throttle += 10;
+                    Protocol.throttle += 100;
                     btSendBytes(Protocol.getSendData(Protocol.SET_THROTTLE,
                             Protocol.getCommandData(Protocol.SET_THROTTLE)));
 
@@ -174,7 +174,7 @@ static boolean upFlag = false;
                     upFlag = false;
 
                     this.wait(2000);
-                    onlauchLandButtonClicked(findViewById(R.id.lauchLandButton));
+                    //onlauchLandButtonClicked(findViewById(R.id.lauchLandButton));
 //                    onaltHoldButtonClicked(findViewById(R.id.altHoldButton));
                 }
 
@@ -434,7 +434,7 @@ static boolean upFlag = false;
             if (matches_text.contains("up")) {
                 Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("up")) , Toast.LENGTH_LONG).show();
                 upFlag = true;
-                btSendBytes(Protocol.getSendData(Protocol.SET_THROTTLE,Protocol.getCommandData(Protocol.SET_THROTTLE)));
+                //btSendBytes(Protocol.getSendData(Protocol.SET_THROTTLE,Protocol.getCommandData(Protocol.SET_THROTTLE)));
                 command = "Up";
             } else if (matches_text.contains("down")) {
                 Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("down")) , Toast.LENGTH_LONG).show();
