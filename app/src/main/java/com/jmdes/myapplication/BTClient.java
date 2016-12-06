@@ -425,6 +425,8 @@ public class BTClient extends Activity {
             String command = "";
             if (matches_text.contains("up")) {
                 Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("up")) , Toast.LENGTH_LONG).show();
+                Protocol.throttle += 100;
+                btSendBytes(Protocol.getSendData(Protocol.throttle,Protocol.getCommandData(Protocol.throttle)));
                 command = "Up";
             } else if (matches_text.contains("down")) {
                 Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("down")) , Toast.LENGTH_LONG).show();
