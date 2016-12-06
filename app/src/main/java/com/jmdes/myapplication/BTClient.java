@@ -227,8 +227,6 @@ public class BTClient extends Activity {
 
         // Enable the IMU data update timer
         timeHandler.postDelayed(runnable, WRITE_DATA_PERIOD); // Executed every 1s
-
-        onConnectButtonClicked(findViewById(R.id.connectButton));
 	}
 
     @Override
@@ -320,7 +318,7 @@ public class BTClient extends Activity {
         String disconnectToast = getResources().getString(R.string.DisconnectToast);
 
         if(mConnected){
-            if(!lauchLandButton.getText().equals(land)){
+            if(lauchLandButton.getText() != land){
                 btSendBytes(Protocol.getSendData(Protocol.LAUCH, Protocol.getCommandData(Protocol.LAUCH)));
                 lauchLandButton.setText(land);
                 Protocol.throttle=Protocol.LAUCH_THROTTLE;
@@ -404,8 +402,8 @@ public class BTClient extends Activity {
 		switch (requestCode) {
 		case REQUEST_CONNECT_DEVICE:
 			if (resultCode == Activity.RESULT_OK){
-                mDeviceName = "Crazepony";
-                mDeviceAddress = "E0:E5:CF:CD:DF:3C";
+                mDeviceName = data.getExtras().getString(EXTRAS_DEVICE_NAME);
+                mDeviceAddress = data.getExtras().getString(EXTRAS_DEVICE_ADDRESS);
 
                 Log.i(TAG, "mDeviceName:"+mDeviceName+",mDeviceAddress:"+mDeviceAddress);
 
@@ -426,14 +424,10 @@ public class BTClient extends Activity {
 
             String command = "";
             if (matches_text.contains("up")) {
-               // Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("up")) , Toast.LENGTH_LONG).show();
-                Protocol.throttle += 100;
-                btSendBytes(Protocol.getSendData(Protocol.throttle,Protocol.getCommandData(Protocol.throttle)));
-                onaltHoldButtonClicked(findViewById(R.id.altHoldButton));
+                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("up")) , Toast.LENGTH_LONG).show();
                 command = "Up";
             } else if (matches_text.contains("down")) {
-               // Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("down")) , Toast.LENGTH_LONG).show();
-
+                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("down")) , Toast.LENGTH_LONG).show();
                 command = "Down";
             } else if (matches_text.contains("land")) {
                 Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("land")) , Toast.LENGTH_LONG).show();
