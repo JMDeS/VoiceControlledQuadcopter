@@ -41,7 +41,7 @@ import static com.jmdes.myapplication.R.layout.main;
 public class BTClient extends Activity {
     Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 
-
+static boolean upFlag = false;
     private final static String TAG = BTClient.class.getSimpleName();
 
     public static final String EXTRAS_DEVICE_NAME = "DEVICE_NAME";
@@ -160,14 +160,22 @@ public class BTClient extends Activity {
 
 
                 // process stick movement，Processing remote sensing data
-                if(stickView.touchReadyToSend==true){
-                    btSendBytes(Protocol.getSendData(Protocol.SET_4CON,
-                            Protocol.getCommandData(Protocol.SET_4CON)));
+//                if(stickView.touchReadyToSend==true){
+                if(upFlag==true){
+//                    btSendBytes(Protocol.getSendData(Protocol.SET_4CON,
+//                            Protocol.getCommandData(Protocol.SET_4CON)));
+                    Protocol.throttle += 10;
+                    btSendBytes(Protocol.getSendData(Protocol.SET_THROTTLE,
+                            Protocol.getCommandData(Protocol.SET_THROTTLE)));
 
                     Log.i(TAG,"Thro: " +Protocol.throttle +",yaw: " +Protocol.yaw+ ",roll: "
                             + Protocol.roll +",pitch: "+ Protocol.pitch);
 
-                    stickView.touchReadyToSend=false;
+                    upFlag = false;
+
+                    this.wait(2000);
+                    onlauchLandButtonClicked(findViewById(R.id.lauchLandButton));
+//                    onaltHoldButtonClicked(findViewById(R.id.altHoldButton));
                 }
 
                 // Update the display of remote sensing data，update the joystick data
@@ -322,7 +330,7 @@ public class BTClient extends Activity {
                 btSendBytes(Protocol.getSendData(Protocol.LAUCH, Protocol.getCommandData(Protocol.LAUCH)));
                 lauchLandButton.setText(land);
                 Protocol.throttle=Protocol.LAUCH_THROTTLE;
-                Protocol.throttle += 100;
+//                Protocol.throttle += 100;
 //                stickView.SmallRockerCircleY=stickView.rc2StickPosY(Protocol.throttle);
 //                stickView.touchReadyToSend=true;
             }else{
@@ -425,8 +433,8 @@ public class BTClient extends Activity {
             String command = "";
             if (matches_text.contains("up")) {
                 Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("up")) , Toast.LENGTH_LONG).show();
-                Protocol.throttle += 100;
-                btSendBytes(Protocol.getSendData(Protocol.throttle,Protocol.getCommandData(Protocol.throttle)));
+                upFlag = true;
+                btSendBytes(Protocol.getSendData(Protocol.SET_THROTTLE,Protocol.getCommandData(Protocol.SET_THROTTLE)));
                 command = "Up";
             } else if (matches_text.contains("down")) {
                 Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("down")) , Toast.LENGTH_LONG).show();
@@ -437,8 +445,20 @@ public class BTClient extends Activity {
                 command = "Land";
             } else if (matches_text.contains("launch")) {
 //                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("Launch")) , Toast.LENGTH_LONG).show();
-                onSendArmButtonClicked(findViewById(R.id.lauchLandButton));
+                onlauchLandButtonClicked(findViewById(R.id.lauchLandButton));
                 command = "Launch";
+            } else if (matches_text.contains("start")) {
+//                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("Launch")) , Toast.LENGTH_LONG).show();
+                onSendArmButtonClicked(findViewById(R.id.armButton));
+                command = "Start";
+            } else if (matches_text.contains("calibrate")){
+                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("calibrate")) , Toast.LENGTH_LONG).show();
+                onAccCaliButtonClicked(findViewById(R.id.accCaliButton));
+                command = "calibrate";
+            } else if (matches_text.contains("hover")){
+                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("hover")) , Toast.LENGTH_LONG).show();
+                onaltHoldButtonClicked(findViewById(R.id.altHoldButton));
+                command = "hover";
             } else {
                 Toast.makeText(getApplicationContext(), "No such command!" , Toast.LENGTH_LONG).show();
             }
