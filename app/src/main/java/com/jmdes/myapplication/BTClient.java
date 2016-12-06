@@ -227,6 +227,8 @@ public class BTClient extends Activity {
 
         // Enable the IMU data update timer
         timeHandler.postDelayed(runnable, WRITE_DATA_PERIOD); // Executed every 1s
+
+        onConnectButtonClicked(findViewById(R.id.connectButton));
 	}
 
     @Override
@@ -318,7 +320,7 @@ public class BTClient extends Activity {
         String disconnectToast = getResources().getString(R.string.DisconnectToast);
 
         if(mConnected){
-            if(lauchLandButton.getText() != land){
+            if(!lauchLandButton.getText().equals(land)){
                 btSendBytes(Protocol.getSendData(Protocol.LAUCH, Protocol.getCommandData(Protocol.LAUCH)));
                 lauchLandButton.setText(land);
                 Protocol.throttle=Protocol.LAUCH_THROTTLE;
@@ -402,8 +404,8 @@ public class BTClient extends Activity {
 		switch (requestCode) {
 		case REQUEST_CONNECT_DEVICE:
 			if (resultCode == Activity.RESULT_OK){
-                mDeviceName = data.getExtras().getString(EXTRAS_DEVICE_NAME);
-                mDeviceAddress = data.getExtras().getString(EXTRAS_DEVICE_ADDRESS);
+                mDeviceName = "Crazepony";
+                mDeviceAddress = "E0:E5:CF:CD:DF:3C";
 
                 Log.i(TAG, "mDeviceName:"+mDeviceName+",mDeviceAddress:"+mDeviceAddress);
 
