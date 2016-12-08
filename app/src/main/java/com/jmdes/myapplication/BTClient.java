@@ -162,11 +162,13 @@ static boolean upFlag = false;
                 // process stick movement，Processing remote sensing data
 //                if(stickView.touchReadyToSend==true){
                 if(upFlag==true){
-//                    btSendBytes(Protocol.getSendData(Protocol.SET_4CON,
-//                            Protocol.getCommandData(Protocol.SET_4CON)));
-                    Protocol.throttle = 1455;
-                    btSendBytes(Protocol.getSendData(Protocol.SET_THROTTLE,
-                            Protocol.getCommandData(Protocol.SET_THROTTLE)));
+                    //btSendBytes(Protocol.getSendData(Protocol.SET_THROTTLE,
+                      //      Protocol.getCommandData(Protocol.SET_THROTTLE)));
+
+                   btSendBytes(Protocol.getSendData(Protocol.SET_4CON,
+                            Protocol.getCommandData(Protocol.SET_4CON)));
+
+
 
                     Log.i(TAG,"Thro: " +Protocol.throttle +",yaw: " +Protocol.yaw+ ",roll: "
                             + Protocol.roll +",pitch: "+ Protocol.pitch);
@@ -329,7 +331,7 @@ static boolean upFlag = false;
             if(lauchLandButton.getText() != land){
                 btSendBytes(Protocol.getSendData(Protocol.LAUCH, Protocol.getCommandData(Protocol.LAUCH)));
                 lauchLandButton.setText(land);
-                Protocol.throttle=Protocol.LAUCH_THROTTLE;
+                Protocol.throttle=1000;
 //                Protocol.throttle += 100;
 //                stickView.SmallRockerCircleY=stickView.rc2StickPosY(Protocol.throttle);
 //                stickView.touchReadyToSend=true;
@@ -434,6 +436,7 @@ static boolean upFlag = false;
             String command = "";
             if (matches_text.contains("up")) {
                 Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("up")) , Toast.LENGTH_LONG).show();
+                Protocol.throttle += 100;
                 upFlag = true;
                 //btSendBytes(Protocol.getSendData(Protocol.SET_THROTTLE,Protocol.getCommandData(Protocol.SET_THROTTLE)));
                 command = "Up";

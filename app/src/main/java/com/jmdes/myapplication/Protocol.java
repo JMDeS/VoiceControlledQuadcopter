@@ -266,8 +266,11 @@ public class Protocol {
 		        voltage=read16()/100.0f;
 		        speedZ=read16()/1000.0f;
 
-		        System.out.println("pitch: "+pitchAng);
+
+				System.out.println("yawAng: "+ yawAng);
+				System.out.println("pitchAng: "+pitchAng);
 				System.out.println("altitude: "+alt);
+
 				break;
 		  }
 	} 

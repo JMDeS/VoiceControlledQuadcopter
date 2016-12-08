@@ -19,7 +19,7 @@ import android.view.SurfaceView;
 import android.view.SurfaceHolder.Callback;
 
 //import com.test.BTClient.BTClient;
-//Runnable接口方法创建线程，匿名类
+//RunnableThe interface method creates an anonymous class
 @SuppressLint("NewApi")
 public class MySurfaceView extends SurfaceView  implements Callback, Runnable {
 
@@ -38,16 +38,16 @@ public class MySurfaceView extends SurfaceView  implements Callback, Runnable {
 	
 	private float BACK_RECT_SIZE;
 
-	//左右两边摇杆白色背景坐标
+	//Left and right rocker on white background
 	private float BackRectLeft,BackRectTop,BackRectRight,BackRectButtom;
     private float BackRectLeft2,BackRectTop2,BackRectRight2,BackRectButtom2;
 
-	//摇杆的X,Y坐标以及摇杆的半径
+	//The X and Y coordinates of the joystick and the radius of the joystick
 	public float SmallRockerCircleX;
 	public float SmallRockerCircleY;
 	private float SmallRockerCircleR;
 	
-	//固定摇杆背景圆形的X,Y坐标以及半径
+	//Fixed X, Y coordinates and radius of the background of the rocker
     private float RockerCircleX;
     private float RockerCircleY;
     private float RockerCircleR;
@@ -56,7 +56,7 @@ public class MySurfaceView extends SurfaceView  implements Callback, Runnable {
 	private float RockerCircleR2;
     private RectF logoLocation;
 
-	//摇杆的X,Y坐标以及摇杆的半径
+	//The X and Y coordinates of the joystick and the radius of the joystick
 	public float SmallRockerCircleX2;
 	public float SmallRockerCircleY2;
 	private float SmallRockerCircleR2;
@@ -89,9 +89,10 @@ public class MySurfaceView extends SurfaceView  implements Callback, Runnable {
 	}
 
 	//Stick Size init
-    //screenWidth为整个手机屏幕的像素宽度，例如华为Mate 7为1920
-    //Height为摇杆外围正方形框的边长，默认为手机屏幕像素高度的一半，例如华为Mate 7的screenHeight为
-    //1080，则Height值为1080/2=540
+    //screenWidth For the entire mobile phone screen pixel width, for example, Huawei Mate 7 is 1920
+    //HeightFor the rocker outside the square box side length,
+    // the default is half the height of mobile phone screen pixels, such as Huawei Mate 7's screenHeight
+    //1080，The Height value is 1080/2=540
 	private void stickSizeInit(int screenWidth,int Height)
 	{
         LEFT_CENTERX = Height / 2;
