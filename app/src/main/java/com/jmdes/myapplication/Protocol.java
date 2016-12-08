@@ -1,6 +1,9 @@
-//发送部分写有些麻烦，直接定义一个发送缓冲Byte变长数组，写writeInt8 writeInt16 ，把数据到里头，再统一发，发完清空清长。
-//Crazepony APP和飞控之间通信协议使用了MWC飞控协议（MSP，Multiwii Serial Protocol），
-//MSP协议格式详见http://www.multiwii.com/wiki/index.php?title=Multiwii_Serial_Protocol
+// Send some of the trouble to write some of the direct definition of a
+// 		send buffer Byte variable length array, write writeInt8 writeInt16, the data to the inside,
+// 		and then reunification, made empty clear long.
+// Crazepony APP and flight control communication protocol between the use of
+// 		MWC Flight Control Protocol (MSP, Multiwii Serial Protocol),
+// MSP protocol format see http://www.multiwii.com/wiki/index.php?title=Multiwii_Serial_Protocol
 
 package com.jmdes.myapplication;
 
@@ -19,7 +22,7 @@ public class Protocol {
 	ARM_IT=5,
 	DISARM_IT=6,
 	SET_4CON=7,
-	LAUCH=8,
+	LAUNCH =8,
 	LAND_DOWN=9,
 	HOLD_ALT=10,
 	STOP_HOLD_ALT=11,
@@ -32,7 +35,7 @@ public class Protocol {
 	SET_MOTOR=214,
 	MSP_ACC_CALIBRATION=205;
 	
-	public static final int LAUCH_THROTTLE=1455;
+	public static final int LAUNCH_THROTTLE =1455;
 	public static final int LAND_THROTTLE=1340;
 	
 	
@@ -81,7 +84,7 @@ public class Protocol {
 		case DISARM_IT:
 			return null;
 			//break;
-		case LAUCH: 
+		case LAUNCH:
 			//throttle
 			return null; 
 		case LAND_DOWN:
