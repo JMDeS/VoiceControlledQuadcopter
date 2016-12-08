@@ -433,7 +433,7 @@ static boolean upFlag = false;
             // call function to handle commands
             matches_text = data
                     .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-
+//money
             Log.d("VoiceTest",matches_text.toString());
 
             String command = "";
