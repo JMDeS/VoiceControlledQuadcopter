@@ -35,8 +35,8 @@ public class Protocol {
 	SET_MOTOR=214,
 	MSP_ACC_CALIBRATION=205;
 	
-	public static final int LAUNCH_THROTTLE =1650;
-	public static final int LAND_THROTTLE=1250;
+	public static final int LAUNCH_THROTTLE =1600;
+	public static final int LAND_THROTTLE=1350;
 	
 	
 	

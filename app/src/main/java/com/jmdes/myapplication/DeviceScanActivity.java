@@ -87,7 +87,7 @@ public class DeviceScanActivity extends ListActivity {
                 // result of the request.
             }
         }
-        /*
+
 
         // Sets the scan button response
         Button scanButton = (Button) findViewById(R.id.button_scan);
@@ -111,7 +111,7 @@ public class DeviceScanActivity extends ListActivity {
                 finish();
             }
         });
-*/
+
 
         // Use this check to determine whether BLE is supported on the device.  Then you can
         // selectively disable BLE-related features.
@@ -132,18 +132,18 @@ public class DeviceScanActivity extends ListActivity {
             finish();
             return;
         }
-        // Get back to the main interface of the data
-        final Intent intent = new Intent();
-        intent.putExtra(BTClient.EXTRAS_DEVICE_NAME, "CrazePony");
-        intent.putExtra(BTClient.EXTRAS_DEVICE_ADDRESS, "E0:E5:CF:CD:DF:3C");
-        if (mScanning) {
-            mBluetoothAdapter.stopLeScan(mLeScanCallback);
-            mScanning = false;
-        }
-
-        // Set the return value and end the program
-        setResult(Activity.RESULT_OK, intent);
-        finish();
+//        // Get back to the main interface of the data
+//        final Intent intent = new Intent();
+//        intent.putExtra(BTClient.EXTRAS_DEVICE_NAME, "CrazePony");
+//        intent.putExtra(BTClient.EXTRAS_DEVICE_ADDRESS, "E0:E5:CF:CD:DF:3C");
+//        if (mScanning) {
+//            mBluetoothAdapter.stopLeScan(mLeScanCallback);
+//            mScanning = false;
+//        }
+//
+//        // Set the return value and end the program
+//        setResult(Activity.RESULT_OK, intent);
+//        finish();
 
     }
 
@@ -192,7 +192,7 @@ public class DeviceScanActivity extends ListActivity {
 
         // Get back to the main interface of the data
         final Intent intent = new Intent();
-        intent.putExtra(BTClient.EXTRAS_DEVICE_NAME, "CrazePony");
+        intent.putExtra(BTClient.EXTRAS_DEVICE_NAME, device.getAddress());
         intent.putExtra(BTClient.EXTRAS_DEVICE_ADDRESS, device.getAddress());
         if (mScanning) {
             mBluetoothAdapter.stopLeScan(mLeScanCallback);

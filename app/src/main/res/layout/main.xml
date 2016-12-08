@@ -8,7 +8,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="310dp">
 
         <LinearLayout
             android:orientation="vertical"
@@ -69,7 +69,7 @@
                 android:layout_weight="1"
                 android:onClick="onheadFreeButtonClicked"
                 android:text="@string/Headfree"
-                android:visibility="invisible">
+                android:visibility="visible">
             </Button>
 
 
@@ -78,7 +78,8 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="135dp"
+            android:weightSum="1">
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -131,7 +132,8 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="28dp">
+                android:layout_height="28dp"
+                android:layout_weight="0.20">
 
                 <TextView android:id="@+id/throttleText"
                     android:layout_width="match_parent"

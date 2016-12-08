@@ -11,10 +11,10 @@
     <string name="Arm">Arm</string>
     <string name="Launch">Launch</string>
     <string name="Land">Land</string>
-    <string name="Headfree">Headfree</string>
+    <string name="Headfree">Level</string>
     <string name="Headstrict">Headstrict</string>
     <string name="Altihold">Altihold</string>
-    <string name="IMUCali">IMUCali</string>
+    <string name="IMUCali">Calibrate</string>
 
     <string name="DisconnectToast">Not connected to device</string>
     <string name="ConnectFailToast">Connection Failed!</string>

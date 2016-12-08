@@ -161,30 +161,16 @@ static boolean changeFlag = false;
                 // process stick movement，Processing remote sensing data
 //                if(stickView.touchReadyToSend==true){
                 if(changeFlag==true){
-                    //btSendBytes(Protocol.getSendData(Protocol.SET_THROTTLE,
-                      //      Protocol.getCommandData(Protocol.SET_THROTTLE)));
 
                    btSendBytes(Protocol.getSendData(Protocol.SET_4CON,
                             Protocol.getCommandData(Protocol.SET_4CON)));
 
-
-
                     Log.i(TAG,"Thro: " +Protocol.throttle +",yaw: " +Protocol.yaw+ ",roll: "
                             + Protocol.roll +",pitch: "+ Protocol.pitch);
-
-                    sleep(50);
-
-                    Protocol.pitch=1500;
-                    Protocol.roll=1500;
-
-                    btSendBytes(Protocol.getSendData(Protocol.SET_4CON,
-                            Protocol.getCommandData(Protocol.SET_4CON)));
 
                     changeFlag = false;
 
 //                    this.wait(2000);
-                    //onlaunchLandButtonClicked(findViewById(R.id.launchLandButton));
-//                    onaltHoldButtonClicked(findViewById(R.id.altHoldButton));
                 }
 
                 // Update the display of remote sensing data，update the joystick data
@@ -200,8 +186,9 @@ static boolean changeFlag = false;
     // The Settings button appears as the default initialization value
     // The connection is successful or disconnected, you need to reset the value of button
     private void resetButtonValue(final int connectBtnId) {
-        connectButton.setText("CONNECTED");
-        connectButton.setTextColor(Color.GREEN);
+//        connectButton.setText("CONNECTED");
+//        connectButton.setTextColor(Color.GREEN);
+        connectButton.setText(connectBtnId);
         armButton.setText(R.string.Unarm);
         launchLandButton.setText(R.string.Launch);
         headFreeButton.setTextColor(Color.WHITE);
@@ -363,19 +350,23 @@ static boolean changeFlag = false;
 	// Headless mode key
 	public void onheadFreeButtonClicked(View v)
 	{
-        String disconnectToast = getResources().getString(R.string.DisconnectToast);
 
-		if(mConnected){
-			if(headFreeButton.getCurrentTextColor()!=Color.GREEN)
-			{	btSendBytes(Protocol.getSendData(Protocol.HEAD_FREE, Protocol.getCommandData(Protocol.HEAD_FREE)));
-				headFreeButton.setTextColor(Color.GREEN);
-			}else{
-				btSendBytes(Protocol.getSendData(Protocol.STOP_HEAD_FREE, Protocol.getCommandData(Protocol.STOP_HEAD_FREE)));
-				headFreeButton.setTextColor(Color.WHITE);
-			}
-		}else {
-            Toast.makeText(this, disconnectToast, Toast.LENGTH_SHORT).show();
-        }
+        Protocol.roll = 1500;
+        Protocol.pitch = 1500;
+        changeFlag = true;
+//        String disconnectToast = getResources().getString(R.string.DisconnectToast);
+//
+//		if(mConnected){
+//			if(headFreeButton.getCurrentTextColor()!=Color.GREEN)
+//			{	btSendBytes(Protocol.getSendData(Protocol.HEAD_FREE, Protocol.getCommandData(Protocol.HEAD_FREE)));
+//				headFreeButton.setTextColor(Color.GREEN);
+//			}else{
+//				btSendBytes(Protocol.getSendData(Protocol.STOP_HEAD_FREE, Protocol.getCommandData(Protocol.STOP_HEAD_FREE)));
+//				headFreeButton.setTextColor(Color.WHITE);
+//			}
+//		}else {
+//            Toast.makeText(this, disconnectToast, Toast.LENGTH_SHORT).show();
+//        }
 		
 	}
 
@@ -450,8 +441,8 @@ static boolean changeFlag = false;
                 onConnectButtonClicked(findViewById(R.id.connectButton));
             }
            else if (matches_text.contains("lift")) {
-                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("up")) , Toast.LENGTH_LONG).show();
-                Protocol.throttle += 100;
+//                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("up")) , Toast.LENGTH_LONG).show();
+                Protocol.throttle += 50;
                 changeFlag = true;
                 //btSendBytes(Protocol.getSendData(Protocol.SET_THROTTLE,Protocol.getCommandData(Protocol.SET_THROTTLE)));
                 command = "Lift";
@@ -485,13 +476,18 @@ static boolean changeFlag = false;
                 command = "hover";
             } else if (matches_text.contains("left")){
                 //Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("hover")) , Toast.LENGTH_LONG).show();
-                Protocol.roll = 1475;
-
-                command = "hover";
+                Protocol.roll = 1250;
+                changeFlag = true;
+                command = "left";
+            } else if (matches_text.contains("right")){
+                //Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("hover")) , Toast.LENGTH_LONG).show();
+                Protocol.roll = 1750;
+                changeFlag = true;
+                command = "right";
             }else {
                 Toast.makeText(getApplicationContext(), "No such command!" , Toast.LENGTH_LONG).show();
             }
-            changeFlag = true;
+
             Toast.makeText(getApplicationContext(), command + " Command Received", Toast.LENGTH_LONG).show();
 //            startActivityForResult(intent, ACTION_RECOGNIZE_SPEECH);
             break;
