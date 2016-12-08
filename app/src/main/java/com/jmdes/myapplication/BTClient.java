@@ -8,7 +8,6 @@
 
 package com.jmdes.myapplication;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
@@ -25,11 +24,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.speech.RecognizerIntent;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,7 +61,7 @@ static boolean upFlag = false;
 	 
 	private TextView throttleText,yawText,pitchText,rollText;
 	private TextView pitchAngText,rollAngText,yawAngText,altText,distanceText,voltageText;
-	private Button connectButton, armButton,lauchLandButton,headFreeButton,altHoldButton, speechButton;
+	private Button connectButton, armButton, launchLandButton,headFreeButton,altHoldButton, speechButton;
 
     //Joystick interface implementation class，joystick UI
 	private MySurfaceView stickView;
@@ -176,7 +173,7 @@ static boolean upFlag = false;
                     upFlag = false;
 
                     this.wait(2000);
-                    //onlauchLandButtonClicked(findViewById(R.id.lauchLandButton));
+                    //onlauchLandButtonClicked(findViewById(R.id.launchLandButton));
 //                    onaltHoldButtonClicked(findViewById(R.id.altHoldButton));
                 }
 
@@ -196,7 +193,7 @@ static boolean upFlag = false;
         connectButton.setText("CONNECTED");
         connectButton.setTextColor(Color.GREEN);
         armButton.setText(R.string.Unarm);
-        lauchLandButton.setText(R.string.Launch);
+        launchLandButton.setText(R.string.Launch);
         headFreeButton.setTextColor(Color.WHITE);
         altHoldButton.setTextColor(Color.WHITE);
     }
@@ -227,7 +224,7 @@ static boolean upFlag = false;
 		// Button
         connectButton=(Button)findViewById(R.id.connectButton);
 		armButton=(Button)findViewById(R.id.armButton);
-		lauchLandButton=(Button)findViewById(R.id.lauchLandButton);
+		launchLandButton =(Button)findViewById(R.id.launchLandButton);
 		headFreeButton=(Button)findViewById(R.id.headFreeButton);
 		altHoldButton=(Button)findViewById(R.id.altHoldButton);
 
@@ -328,17 +325,17 @@ static boolean upFlag = false;
         String disconnectToast = getResources().getString(R.string.DisconnectToast);
 
         if(mConnected){
-            if(lauchLandButton.getText() != land){
-                btSendBytes(Protocol.getSendData(Protocol.LAUCH, Protocol.getCommandData(Protocol.LAUCH)));
-                lauchLandButton.setText(land);
-                Protocol.throttle=1000;
+            if(launchLandButton.getText() != land){
+                btSendBytes(Protocol.getSendData(Protocol.LAUNCH, Protocol.getCommandData(Protocol.LAUNCH)));
+                launchLandButton.setText(land);
+                Protocol.throttle=Protocol.LAUNCH_THROTTLE;
 //                Protocol.throttle += 100;
 //                stickView.SmallRockerCircleY=stickView.rc2StickPosY(Protocol.throttle);
 //                stickView.touchReadyToSend=true;
                 upFlag = true;
             }else{
                 btSendBytes(Protocol.getSendData(Protocol.LAND_DOWN, Protocol.getCommandData(Protocol.LAND_DOWN)));
-                lauchLandButton.setText(launch);
+                launchLandButton.setText(launch);
                 Protocol.throttle=Protocol.LAND_THROTTLE;
 //                stickView.SmallRockerCircleY=stickView.rc2StickPosY(Protocol.throttle);
 //                stickView.touchReadyToSend=true;
@@ -445,11 +442,11 @@ static boolean upFlag = false;
                 command = "Down";
             } else if (matches_text.contains("land")) {
                 Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("land")) , Toast.LENGTH_LONG).show();
-                onlauchLandButtonClicked(findViewById(R.id.lauchLandButton));
+                onlauchLandButtonClicked(findViewById(R.id.launchLandButton));
                 command = "Land";
             } else if (matches_text.contains("launch")) {
 //                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("Launch")) , Toast.LENGTH_LONG).show();
-                onlauchLandButtonClicked(findViewById(R.id.lauchLandButton));
+                onlauchLandButtonClicked(findViewById(R.id.launchLandButton));
                 command = "Launch";
             } else if (matches_text.contains("start")) {
 //                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("Launch")) , Toast.LENGTH_LONG).show();
