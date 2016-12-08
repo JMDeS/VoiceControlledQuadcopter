@@ -87,6 +87,8 @@ public class DeviceScanActivity extends ListActivity {
                 // result of the request.
             }
         }
+        /*
+
         // Sets the scan button response
         Button scanButton = (Button) findViewById(R.id.button_scan);
         scanButton.setOnClickListener(new View.OnClickListener() {
@@ -109,7 +111,7 @@ public class DeviceScanActivity extends ListActivity {
                 finish();
             }
         });
-
+*/
 
         // Use this check to determine whether BLE is supported on the device.  Then you can
         // selectively disable BLE-related features.

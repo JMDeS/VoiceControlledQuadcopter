@@ -329,7 +329,7 @@ static boolean upFlag = false;
 
         if(mConnected){
             if(lauchLandButton.getText() != land){
-                btSendBytes(Protocol.getSendData(Protocol.LAUCH, Protocol.getCommandData(Protocol.LAUCH)));
+                btSendBytes(Protocol.getSendData(Protocol.LAUNCH, Protocol.getCommandData(Protocol.LAUNCH)));
                 lauchLandButton.setText(land);
                 Protocol.throttle=1000;
 //                Protocol.throttle += 100;
@@ -412,19 +412,22 @@ static boolean upFlag = false;
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
 		case REQUEST_CONNECT_DEVICE:
-			if (resultCode == Activity.RESULT_OK){
+			if (resultCode == Activity.RESULT_OK) {
                 mDeviceName = data.getExtras().getString(EXTRAS_DEVICE_NAME);
                 mDeviceAddress = data.getExtras().getString(EXTRAS_DEVICE_ADDRESS);
 
-                Log.i(TAG, "mDeviceName:"+mDeviceName+",mDeviceAddress:"+mDeviceAddress);
+                Log.i(TAG, "mDeviceName:" + mDeviceName + ",mDeviceAddress:" + mDeviceAddress);
 
-                // Connect the BLE Crazepony module
-                if (mBluetoothLeService != null) {
-                    final boolean result = mBluetoothLeService.connect(mDeviceAddress);
-                    Log.d(TAG, "Connect request result=" + result);
+                if (mDeviceName == "CrazePony") {
+
+                    // Connect the BLE Crazepony module
+                    if (mBluetoothLeService != null) {
+                        final boolean result = mBluetoothLeService.connect(mDeviceAddress);
+                        Log.d(TAG, "Connect request result=" + result);
+                    }
                 }
+                super.onActivityResult(requestCode, resultCode, data);
             }
-            super.onActivityResult(requestCode, resultCode, data);
 			break;
         case ACTION_RECOGNIZE_SPEECH:
             // call function to handle commands
@@ -434,21 +437,24 @@ static boolean upFlag = false;
             Log.d("VoiceTest",matches_text.toString());
 
             String command = "";
-            if (matches_text.contains("up")) {
-                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("up")) , Toast.LENGTH_LONG).show();
+            if(matches_text.contains("connect")){
+                onConnectButtonClicked(findViewById(R.id.connectButton));
+            }if (matches_text.contains("up")) {
+               // Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("up")) , Toast.LENGTH_LONG).show();
                 Protocol.throttle += 100;
                 upFlag = true;
                 //btSendBytes(Protocol.getSendData(Protocol.SET_THROTTLE,Protocol.getCommandData(Protocol.SET_THROTTLE)));
                 command = "Up";
             } else if (matches_text.contains("down")) {
-                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("down")) , Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("down")) , Toast.LENGTH_LONG).show();
                 command = "Down";
             } else if (matches_text.contains("land")) {
-                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("land")) , Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("land")) , Toast.LENGTH_LONG).show();
                 onlauchLandButtonClicked(findViewById(R.id.lauchLandButton));
                 command = "Land";
             } else if (matches_text.contains("launch")) {
 //                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("Launch")) , Toast.LENGTH_LONG).show();
+                onSendArmButtonClicked(findViewById(R.id.armButton));
                 onlauchLandButtonClicked(findViewById(R.id.lauchLandButton));
                 command = "Launch";
             } else if (matches_text.contains("start")) {
@@ -456,7 +462,7 @@ static boolean upFlag = false;
                 onSendArmButtonClicked(findViewById(R.id.armButton));
                 command = "Start";
             } else if (matches_text.contains("calibrate")){
-                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("calibrate")) , Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("calibrate")) , Toast.LENGTH_LONG).show();
                 onAccCaliButtonClicked(findViewById(R.id.accCaliButton));
                 command = "calibrate";
             } else if (matches_text.contains("hover")){
