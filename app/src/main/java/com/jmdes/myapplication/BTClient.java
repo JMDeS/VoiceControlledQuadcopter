@@ -447,8 +447,10 @@ static boolean upFlag = false;
                 //Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("down")) , Toast.LENGTH_LONG).show();
                 command = "Down";
             } else if (matches_text.contains("land")) {
-                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("land")) , Toast.LENGTH_LONG).show();
-                onlaunchLandButtonClicked(findViewById(R.id.launchLandButton));
+                //Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("land")) , Toast.LENGTH_LONG).show();
+                //onlaunchLandButtonClicked(findViewById(R.id.launchLandButton));
+                Protocol.throttle = Protocol.LAND_THROTTLE;
+                upFlag = true;
                 command = "Land";
             } else if (matches_text.contains("launch")) {
 //                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("Launch")) , Toast.LENGTH_LONG).show();
