@@ -130,6 +130,19 @@ public class DeviceScanActivity extends ListActivity {
             finish();
             return;
         }
+        // Get back to the main interface of the data
+        final Intent intent = new Intent();
+        intent.putExtra(BTClient.EXTRAS_DEVICE_NAME, "CrazePony");
+        intent.putExtra(BTClient.EXTRAS_DEVICE_ADDRESS, "E0:E5:CF:CD:DF:3C");
+        if (mScanning) {
+            mBluetoothAdapter.stopLeScan(mLeScanCallback);
+            mScanning = false;
+        }
+
+        // Set the return value and end the program
+        setResult(Activity.RESULT_OK, intent);
+        finish();
+
     }
 
     @Override
@@ -177,7 +190,7 @@ public class DeviceScanActivity extends ListActivity {
 
         // Get back to the main interface of the data
         final Intent intent = new Intent();
-        intent.putExtra(BTClient.EXTRAS_DEVICE_NAME, device.getName());
+        intent.putExtra(BTClient.EXTRAS_DEVICE_NAME, "CrazePony");
         intent.putExtra(BTClient.EXTRAS_DEVICE_ADDRESS, device.getAddress());
         if (mScanning) {
             mBluetoothAdapter.stopLeScan(mLeScanCallback);
