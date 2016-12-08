@@ -32,7 +32,9 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import static android.R.attr.delay;
 import static com.jmdes.myapplication.R.layout.main;
+import static java.lang.Thread.sleep;
 
 @SuppressLint("NewApi")
 public class BTClient extends Activity {
@@ -169,6 +171,14 @@ static boolean changeFlag = false;
 
                     Log.i(TAG,"Thro: " +Protocol.throttle +",yaw: " +Protocol.yaw+ ",roll: "
                             + Protocol.roll +",pitch: "+ Protocol.pitch);
+
+                    sleep(50);
+
+                    Protocol.pitch=1500;
+                    Protocol.roll=1500;
+
+                    btSendBytes(Protocol.getSendData(Protocol.SET_4CON,
+                            Protocol.getCommandData(Protocol.SET_4CON)));
 
                     changeFlag = false;
 
