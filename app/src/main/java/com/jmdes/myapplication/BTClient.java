@@ -38,7 +38,7 @@ import static com.jmdes.myapplication.R.layout.main;
 public class BTClient extends Activity {
     Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 
-static boolean upFlag = false;
+static boolean changeFlag = false;
     private final static String TAG = BTClient.class.getSimpleName();
 
     public static final String EXTRAS_DEVICE_NAME = "DEVICE_NAME";
@@ -158,7 +158,7 @@ static boolean upFlag = false;
 
                 // process stick movement，Processing remote sensing data
 //                if(stickView.touchReadyToSend==true){
-                if(upFlag==true){
+                if(changeFlag==true){
                     //btSendBytes(Protocol.getSendData(Protocol.SET_THROTTLE,
                       //      Protocol.getCommandData(Protocol.SET_THROTTLE)));
 
@@ -170,7 +170,7 @@ static boolean upFlag = false;
                     Log.i(TAG,"Thro: " +Protocol.throttle +",yaw: " +Protocol.yaw+ ",roll: "
                             + Protocol.roll +",pitch: "+ Protocol.pitch);
 
-                    upFlag = false;
+                    changeFlag = false;
 
 //                    this.wait(2000);
                     //onlaunchLandButtonClicked(findViewById(R.id.launchLandButton));
@@ -222,6 +222,7 @@ static boolean upFlag = false;
 //		stickView=(MySurfaceView)findViewById(R.id.stickView);
 
 		// Button
+        speechButton=(Button)findViewById(R.id.speechButton);
         connectButton=(Button)findViewById(R.id.connectButton);
 		armButton=(Button)findViewById(R.id.armButton);
 		launchLandButton =(Button)findViewById(R.id.launchLandButton);
@@ -335,11 +336,12 @@ static boolean upFlag = false;
 //                Protocol.throttle += 100;
 //                stickView.SmallRockerCircleY=stickView.rc2StickPosY(Protocol.throttle);
 //                stickView.touchReadyToSend=true;
-                upFlag = true;
+                changeFlag = true;
             }else{
-                btSendBytes(Protocol.getSendData(Protocol.LAND_DOWN, Protocol.getCommandData(Protocol.LAND_DOWN)));
+//                btSendBytes(Protocol.getSendData(Protocol.LAND_DOWN, Protocol.getCommandData(Protocol.LAND_DOWN)));
                 launchLandButton.setText(launch);
-                Protocol.throttle=Protocol.LAND_THROTTLE;
+                Protocol.throttle = Protocol.LAND_THROTTLE;
+                changeFlag = true;
 //                stickView.SmallRockerCircleY=stickView.rc2StickPosY(Protocol.throttle);
 //                stickView.touchReadyToSend=true;
             }
@@ -440,17 +442,17 @@ static boolean upFlag = false;
             if (matches_text.contains("up")) {
                 Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("up")) , Toast.LENGTH_LONG).show();
                 Protocol.throttle += 100;
-                upFlag = true;
+                changeFlag = true;
                 //btSendBytes(Protocol.getSendData(Protocol.SET_THROTTLE,Protocol.getCommandData(Protocol.SET_THROTTLE)));
                 command = "Up";
             } else if (matches_text.contains("down")) {
                 //Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("down")) , Toast.LENGTH_LONG).show();
+                Protocol.throttle -= 100;
+                changeFlag = true;
                 command = "Down";
             } else if (matches_text.contains("land")) {
                 //Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("land")) , Toast.LENGTH_LONG).show();
-                //onlaunchLandButtonClicked(findViewById(R.id.launchLandButton));
-                Protocol.throttle = Protocol.LAND_THROTTLE;
-                upFlag = true;
+                onlaunchLandButtonClicked(findViewById(R.id.launchLandButton));
                 command = "Land";
             } else if (matches_text.contains("launch")) {
 //                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("Launch")) , Toast.LENGTH_LONG).show();

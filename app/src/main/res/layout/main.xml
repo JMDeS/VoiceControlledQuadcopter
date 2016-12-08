@@ -8,7 +8,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="275dp">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:orientation="vertical"
@@ -39,7 +39,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="onlaunchLandButtonClicked"
-                android:text="@string/Launch" >
+                android:text="@string/Launch"
+                android:visibility="invisible">
             </Button>
 
             <Button
@@ -48,7 +49,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="onaltHoldButtonClicked"
-                android:text="@string/Altihold" >
+                android:text="@string/Altihold"
+                android:visibility="invisible">
             </Button>
 
             <Button
@@ -66,8 +68,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="onheadFreeButtonClicked"
-                android:text="@string/Headfree" >
+                android:text="@string/Headfree"
+                android:visibility="invisible">
             </Button>
+
 
         </LinearLayout>
 
@@ -159,12 +163,23 @@
 
     </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/speech"
+    <Button
+        android:text="Press To Send Command!"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srcCompat="@drawable/ic_mic_black_64dp"
-        android:onClick="onSpeechButtonClicked" />
+        android:id="@+id/speechButton"
+        android:onClick="onSpeechButtonClicked"/>
+
+    <!--<ImageButton-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="246dp"-->
+        <!--app:srcCompat="@android:drawable/ic_btn_speak_now"-->
+        <!--android:id="@+id/speechButton"-->
+        <!--android:onClick="onSpeechButtonClicked"-->
+        <!--android:visibility="visible"-->
+        <!--android:elevation="24dp"-->
+        <!--android:adjustViewBounds="true"-->
+        <!--android:background="@android:color/transparent" />-->
 
 
 </LinearLayout>
