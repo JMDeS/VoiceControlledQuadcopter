@@ -64,8 +64,9 @@ public class MySurfaceView extends SurfaceView  implements Callback, Runnable {
 	public float leftTouchStartX,leftTouchStartY,rightTouchStartX,rightTouchStartY;
 
 	static final int YAW_STOP_CONTROL=0;
-    public int altCtrlMode=0;
-	
+//    public int altCtrlMode=0;
+    public int altCtrlMode=1;
+
 	public boolean leftTouching=false,rightTouching=false;
 	private int leftTouchIndex=0,rightTouchIndex=0;
 

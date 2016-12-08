@@ -8,7 +8,6 @@
 
 package com.jmdes.myapplication;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
@@ -25,11 +24,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.speech.RecognizerIntent;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,7 +61,7 @@ static boolean upFlag = false;
 	 
 	private TextView throttleText,yawText,pitchText,rollText;
 	private TextView pitchAngText,rollAngText,yawAngText,altText,distanceText,voltageText;
-	private Button connectButton, armButton,lauchLandButton,headFreeButton,altHoldButton, speechButton;
+	private Button connectButton, armButton, launchLandButton,headFreeButton,altHoldButton, speechButton;
 
     //Joystick interface implementation class，joystick UI
 	private MySurfaceView stickView;
@@ -176,7 +173,7 @@ static boolean upFlag = false;
                     upFlag = false;
 
                     this.wait(2000);
-                    //onlauchLandButtonClicked(findViewById(R.id.lauchLandButton));
+                    //onlaunchLandButtonClicked(findViewById(R.id.launchLandButton));
 //                    onaltHoldButtonClicked(findViewById(R.id.altHoldButton));
                 }
 
@@ -196,7 +193,7 @@ static boolean upFlag = false;
         connectButton.setText("CONNECTED");
         connectButton.setTextColor(Color.GREEN);
         armButton.setText(R.string.Unarm);
-        lauchLandButton.setText(R.string.Launch);
+        launchLandButton.setText(R.string.Launch);
         headFreeButton.setTextColor(Color.WHITE);
         altHoldButton.setTextColor(Color.WHITE);
     }
@@ -227,7 +224,7 @@ static boolean upFlag = false;
 		// Button
         connectButton=(Button)findViewById(R.id.connectButton);
 		armButton=(Button)findViewById(R.id.armButton);
-		lauchLandButton=(Button)findViewById(R.id.lauchLandButton);
+		launchLandButton =(Button)findViewById(R.id.launchLandButton);
 		headFreeButton=(Button)findViewById(R.id.headFreeButton);
 		altHoldButton=(Button)findViewById(R.id.altHoldButton);
 
@@ -321,16 +318,16 @@ static boolean upFlag = false;
 	} 
 	
 	//Take off , land down
-	public void onlauchLandButtonClicked(View v)
+	public void onlaunchLandButtonClicked(View v)
 	{
         String launch  = getResources().getString(R.string.Launch);
         String land = getResources().getString(R.string.Land);
         String disconnectToast = getResources().getString(R.string.DisconnectToast);
 
         if(mConnected){
-            if(lauchLandButton.getText() != land){
+            if(launchLandButton.getText() != land){
                 btSendBytes(Protocol.getSendData(Protocol.LAUNCH, Protocol.getCommandData(Protocol.LAUNCH)));
-                lauchLandButton.setText(land);
+                launchLandButton.setText(land);
                 Protocol.throttle=1000;
 //                Protocol.throttle += 100;
 //                stickView.SmallRockerCircleY=stickView.rc2StickPosY(Protocol.throttle);
@@ -338,7 +335,7 @@ static boolean upFlag = false;
                 upFlag = true;
             }else{
                 btSendBytes(Protocol.getSendData(Protocol.LAND_DOWN, Protocol.getCommandData(Protocol.LAND_DOWN)));
-                lauchLandButton.setText(launch);
+                launchLandButton.setText(launch);
                 Protocol.throttle=Protocol.LAND_THROTTLE;
 //                stickView.SmallRockerCircleY=stickView.rc2StickPosY(Protocol.throttle);
 //                stickView.touchReadyToSend=true;
@@ -412,22 +409,19 @@ static boolean upFlag = false;
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
 		case REQUEST_CONNECT_DEVICE:
-			if (resultCode == Activity.RESULT_OK) {
+			if (resultCode == Activity.RESULT_OK){
                 mDeviceName = data.getExtras().getString(EXTRAS_DEVICE_NAME);
                 mDeviceAddress = data.getExtras().getString(EXTRAS_DEVICE_ADDRESS);
 
-                Log.i(TAG, "mDeviceName:" + mDeviceName + ",mDeviceAddress:" + mDeviceAddress);
+                Log.i(TAG, "mDeviceName:"+mDeviceName+",mDeviceAddress:"+mDeviceAddress);
 
-                if (mDeviceName == "CrazePony") {
-
-                    // Connect the BLE Crazepony module
-                    if (mBluetoothLeService != null) {
-                        final boolean result = mBluetoothLeService.connect(mDeviceAddress);
-                        Log.d(TAG, "Connect request result=" + result);
-                    }
+                // Connect the BLE Crazepony module
+                if (mBluetoothLeService != null) {
+                    final boolean result = mBluetoothLeService.connect(mDeviceAddress);
+                    Log.d(TAG, "Connect request result=" + result);
                 }
-                super.onActivityResult(requestCode, resultCode, data);
             }
+            super.onActivityResult(requestCode, resultCode, data);
 			break;
         case ACTION_RECOGNIZE_SPEECH:
             // call function to handle commands
@@ -437,32 +431,29 @@ static boolean upFlag = false;
             Log.d("VoiceTest",matches_text.toString());
 
             String command = "";
-            if(matches_text.contains("connect")){
-                onConnectButtonClicked(findViewById(R.id.connectButton));
-            }if (matches_text.contains("up")) {
-               // Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("up")) , Toast.LENGTH_LONG).show();
+            if (matches_text.contains("up")) {
+                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("up")) , Toast.LENGTH_LONG).show();
                 Protocol.throttle += 100;
                 upFlag = true;
                 //btSendBytes(Protocol.getSendData(Protocol.SET_THROTTLE,Protocol.getCommandData(Protocol.SET_THROTTLE)));
                 command = "Up";
             } else if (matches_text.contains("down")) {
-                //Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("down")) , Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("down")) , Toast.LENGTH_LONG).show();
                 command = "Down";
             } else if (matches_text.contains("land")) {
-                //Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("land")) , Toast.LENGTH_LONG).show();
-                onlauchLandButtonClicked(findViewById(R.id.lauchLandButton));
+                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("land")) , Toast.LENGTH_LONG).show();
+                onlaunchLandButtonClicked(findViewById(R.id.launchLandButton));
                 command = "Land";
             } else if (matches_text.contains("launch")) {
 //                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("Launch")) , Toast.LENGTH_LONG).show();
-                onSendArmButtonClicked(findViewById(R.id.armButton));
-                onlauchLandButtonClicked(findViewById(R.id.lauchLandButton));
+                onlaunchLandButtonClicked(findViewById(R.id.launchLandButton));
                 command = "Launch";
             } else if (matches_text.contains("start")) {
 //                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("Launch")) , Toast.LENGTH_LONG).show();
                 onSendArmButtonClicked(findViewById(R.id.armButton));
                 command = "Start";
             } else if (matches_text.contains("calibrate")){
-                //Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("calibrate")) , Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("calibrate")) , Toast.LENGTH_LONG).show();
                 onAccCaliButtonClicked(findViewById(R.id.accCaliButton));
                 command = "calibrate";
             } else if (matches_text.contains("hover")){
