@@ -449,12 +449,12 @@ static boolean changeFlag = false;
             if(matches_text.contains("connect")){
                 onConnectButtonClicked(findViewById(R.id.connectButton));
             }
-            if (matches_text.contains("up")) {
+           else if (matches_text.contains("lift")) {
                 Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("up")) , Toast.LENGTH_LONG).show();
                 Protocol.throttle += 100;
                 changeFlag = true;
                 //btSendBytes(Protocol.getSendData(Protocol.SET_THROTTLE,Protocol.getCommandData(Protocol.SET_THROTTLE)));
-                command = "Up";
+                command = "Lift";
             } else if (matches_text.contains("down")) {
                 //Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("down")) , Toast.LENGTH_LONG).show();
                 Protocol.throttle -= 100;
@@ -466,13 +466,16 @@ static boolean changeFlag = false;
                 command = "Land";
             } else if (matches_text.contains("launch")) {
 //                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("Launch")) , Toast.LENGTH_LONG).show();
+                onSendArmButtonClicked(findViewById(R.id.armButton));
                 onlaunchLandButtonClicked(findViewById(R.id.launchLandButton));
                 command = "Launch";
-            } else if (matches_text.contains("start")) {
-//                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("Launch")) , Toast.LENGTH_LONG).show();
-                onSendArmButtonClicked(findViewById(R.id.armButton));
-                command = "Start";
-            } else if (matches_text.contains("calibrate")){
+//            } else if (matches_text.contains("start")) {
+////                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("Launch")) , Toast.LENGTH_LONG).show();
+//                onSendArmButtonClicked(findViewById(R.id.armButton));
+//                command = "Start";
+//            }
+//
+            }else if (matches_text.contains("calibrate")){
                 Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("calibrate")) , Toast.LENGTH_LONG).show();
                 onAccCaliButtonClicked(findViewById(R.id.accCaliButton));
                 command = "calibrate";
