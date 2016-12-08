@@ -476,16 +476,22 @@ static boolean changeFlag = false;
 //            }
 //
             }else if (matches_text.contains("calibrate")){
-                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("calibrate")) , Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("calibrate")) , Toast.LENGTH_LONG).show();
                 onAccCaliButtonClicked(findViewById(R.id.accCaliButton));
                 command = "calibrate";
             } else if (matches_text.contains("hover")){
-                Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("hover")) , Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("hover")) , Toast.LENGTH_LONG).show();
                 onaltHoldButtonClicked(findViewById(R.id.altHoldButton));
                 command = "hover";
-            } else {
+            } else if (matches_text.contains("left")){
+                //Toast.makeText(getApplicationContext(), matches_text.get(matches_text.indexOf("hover")) , Toast.LENGTH_LONG).show();
+                Protocol.roll = 1475;
+
+                command = "hover";
+            }else {
                 Toast.makeText(getApplicationContext(), "No such command!" , Toast.LENGTH_LONG).show();
             }
+            changeFlag = true;
             Toast.makeText(getApplicationContext(), command + " Command Received", Toast.LENGTH_LONG).show();
 //            startActivityForResult(intent, ACTION_RECOGNIZE_SPEECH);
             break;
